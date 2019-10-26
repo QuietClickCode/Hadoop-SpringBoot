@@ -22,7 +22,12 @@ public class HDFSApi {
     @Before
     public void HDFSClientStart() throws URISyntaxException, IOException, InterruptedException {
         conf = new Configuration();
-        fs= FileSystem.get(new URI("hdfs://jerry:9000"), conf, "wangzili");
+        /*fs= FileSystem.get(new URI("hdfs://jerry:9000"), conf, "wangzili");*/
+        //设置环境变量
+        System.setProperty("hadoop.home.dir", "D:\\hadoop\\hadoop-2.5.2");
+        //设置用户,不然没权限
+        System.setProperty("HADOOP_USER_NAME","hadoop");
+        fs= FileSystem.get(new URI("hdfs://localhost:9000"), conf);
     }
     @Test
     @After
@@ -35,7 +40,7 @@ public class HDFSApi {
     public void CopyFromLocalFile() throws IOException {
         //设置副本系数
 //        conf.set("dfs.replication","3");
-        fs.copyFromLocalFile(new Path("file:///home/wangzili/Pictures/鬼刀180824/pic1.jpg"),new Path("/test/pic"));
+        fs.copyFromLocalFile(new Path("D:\\hadoop\\hadoop-2.5.2\\README.txt"),new Path("/aaa"));
         System.out.println("上传完成");
     }
     //文件删除
